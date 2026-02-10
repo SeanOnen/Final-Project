@@ -3,12 +3,12 @@ export async function loadPartials() {
   const footerEl = document.getElementById("site-footer");
 
   if (headerEl) {
-    const headerHTML = await fetch("/src/public/partials/header.html").then(r => r.text());
-    headerEl.innerHTML = headerHTML;
+    const res = await fetch("/partials/header.html");
+    headerEl.innerHTML = await res.text();
   }
 
   if (footerEl) {
-    const footerHTML = await fetch("/src/public/partials/footer.html").then(r => r.text());
-    footerEl.innerHTML = footerHTML;
+    const res = await fetch("/partials/footer.html");
+    footerEl.innerHTML = await res.text();
   }
 }
