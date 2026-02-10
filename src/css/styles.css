@@ -1,0 +1,376 @@
+/* =====================================================
+   FMCG DISTRIBUTOR DASHBOARD — GLOBAL STYLES
+===================================================== */
+
+/* ------------------------------
+   Fonts
+--------------------------------*/
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Roboto:wght@400;500&display=swap");
+
+/* ------------------------------
+   CSS Variables
+--------------------------------*/
+:root {
+  --primary: #040273;       /* Deep Blue */
+  --secondary: #ffbf00;     /* Amber */
+  --neutral-light: #d3d3d3; /* Light Gray */
+  --white: #ffffff;
+
+  --success: #198754;
+  --warning: #ffc107;
+  --danger: #dc3545;
+
+  --font-heading: "Montserrat", sans-serif;
+  --font-body: "Roboto", sans-serif;
+}
+
+/* ------------------------------
+   Global Reset
+--------------------------------*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: #f5f6fa;
+  color: #1f2933;
+  line-height: 1.5;
+}
+
+/* ------------------------------
+   Layout
+--------------------------------*/
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+/* ------------------------------
+   Header / Branding
+--------------------------------*/
+.site-header {
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 1rem 1.5rem;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.site-title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.main-nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.main-nav a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  border-bottom-color: var(--secondary);
+}
+
+/* ------------------------------
+   Footer
+--------------------------------*/
+footer {
+  background-color: var(--primary);
+  color: var(--white);
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.85rem;
+}
+
+/* ------------------------------
+   Page Titles
+--------------------------------*/
+main h1 {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  margin-bottom: 1.25rem;
+  color: var(--primary);
+}
+
+/* ------------------------------
+   KPI Cards
+--------------------------------*/
+.kpi-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.kpi-card {
+  background-color: var(--white);
+  border-radius: 12px;
+  padding: 1.5rem 1.25rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  position: relative;
+}
+
+.kpi-card h3 {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: #475569;
+}
+
+.kpi-card p {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--primary);
+}
+
+/* KPI Accent */
+.kpi-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 6px;
+  width: 100%;
+  background-color: var(--secondary);
+  border-radius: 0 0 12px 12px;
+}
+
+/* KPI Alert States */
+.kpi-card.alert {
+  animation: pulse 1.6s infinite;
+  border: 2px solid var(--danger);
+}
+
+/* ------------------------------
+   Filters
+--------------------------------*/
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.filters select {
+  padding: 0.55rem 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: 1px solid var(--neutral-light);
+  background-color: var(--white);
+}
+
+/* ------------------------------
+   Dashboard Sections
+--------------------------------*/
+.dashboard-section {
+  background-color: var(--white);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.dashboard-section h2 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+/* ------------------------------
+   Tables
+--------------------------------*/
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.data-table thead {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.75rem 0.9rem;
+  text-align: left;
+}
+
+.data-table th {
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+.data-table tbody tr {
+  border-bottom: 1px solid var(--neutral-light);
+}
+
+.data-table tbody tr:hover {
+  background-color: #f1f3f9;
+}
+
+/* Stock Alert States */
+.data-table tr.low-stock {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.data-table tr.out-of-stock {
+  background-color: #f8d7da;
+  color: #721c24;
+  font-weight: 600;
+}
+
+/* ------------------------------
+   Animations
+--------------------------------*/
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(220, 53, 69, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+  }
+}
+
+/* ------------------------------
+   Responsive
+--------------------------------*/
+@media (max-width: 768px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .main-nav {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  main h1 {
+    font-size: 1.35rem;
+  }
+}
+
+/* KPI Trend Indicators */
+.trend-up .trend-arrow {
+  color: #198754;
+}
+
+.trend-down .trend-arrow {
+  color: #dc3545;
+}
+
+.kpi-card {
+  animation: fadeInUp 0.7s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chart-section canvas {
+  height: 340px !important;
+}
+
+.overview-card {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: kpiFade 0.6s ease forwards;
+}
+
+@keyframes kpiFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==============================
+   EXECUTIVE SUMMARY TABLE
+============================== */
+
+.executive-summary {
+  background: #ffffff;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+.executive-summary h2 {
+  margin-bottom: 1rem;
+  color: #040273;
+}
+
+.exec-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.exec-table th {
+  text-align: left;
+  padding: 0.75rem;
+  background: #f3f4f6;
+  color: #040273;
+}
+
+.exec-table td {
+  padding: 0.75rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.status {
+  font-weight: 600;
+}
+
+/* Status states */
+.status.good {
+  color: #16a34a;
+}
+
+.status.warn {
+  color: #f59e0b;
+}
+
+.status.bad {
+  color: #dc2626;
+}
