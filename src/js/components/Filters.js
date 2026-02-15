@@ -1,18 +1,31 @@
-export default function Filters(onChange, options = []) {
+export default function Filters(onChange, filterConfig = []) {
   const container = document.createElement("div");
   container.classList.add("filters");
 
-  const select = document.createElement("select");
+  const state = {};
 
-  select.innerHTML = `
-    <option value="all">All</option>
-    ${options.map(o => `<option value="${o}">${o}</option>`).join("")}
-  `;
+  filterConfig.forEach(config => {
+    const select = document.createElement("select");
 
-  select.addEventListener("change", () => {
-    onChange(select.value);
+    // Accessibility: give select an accessible name
+    select.setAttribute("aria-label", config.label);
+
+    select.innerHTML = `
+      <option value="all">All ${config.label}</option>
+      ${config.options
+        .map(o => `<option value="${o}">${o}</option>`)
+        .join("")}
+    `;
+
+    state[config.key] = "all";
+
+    select.addEventListener("change", () => {
+      state[config.key] = select.value;
+      onChange({ ...state });
+    });
+
+    container.appendChild(select);
   });
 
-  container.appendChild(select);
   return container;
 }

@@ -7,17 +7,46 @@ await loadPartials();
 
 const app = document.querySelector("#app");
 const dataService = new DataService();
-const { aggregated } = await dataService.getDashboardData();
+const { raw } = await dataService.getDashboardData();
 
-const brands = aggregated.map(b => b.brand);
+// extract unique brands and countries
+const brands = [...new Set(raw.map(d => d.brand))];
+const countries = [...new Set(raw.map(d => d.country))];
 
+// render filters
 app.appendChild(
-  Filters((brand) => {
-    renderTable(brand === "all" ? aggregated : aggregated.filter(b => b.brand === brand));
-  }, brands)
+  Filters((selected) => {
+
+    let filtered = raw;
+
+    if (selected.brand !== "all") {
+      filtered = filtered.filter(
+        d => d.brand === selected.brand
+      );
+    }
+
+    if (selected.country !== "all") {
+      filtered = filtered.filter(
+        d => d.country === selected.country
+      );
+    }
+
+    // re-aggregate AFTER filtering
+    const aggregatedFiltered = dataService.aggregateByBrand(filtered);
+
+    renderTable(aggregatedFiltered);
+
+  },
+  [
+    { key: "brand", label: "Brands", options: brands },
+    { key: "country", label: "Countries", options: countries }
+  ])
 );
 
 function renderTable(data) {
+
+  document.querySelector("table")?.remove();
+
   const table = DataTable(
     [
       { label: "Brand", key: "brand" },
@@ -26,8 +55,8 @@ function renderTable(data) {
     data.filter(d => d.inTransit > 0)
   );
 
-  document.querySelector("table")?.remove();
   app.appendChild(table);
 }
 
-renderTable(aggregated);
+// initial render
+renderTable(dataService.aggregateByBrand(raw));

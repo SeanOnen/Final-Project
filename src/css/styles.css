@@ -374,3 +374,11 @@ main h1 {
 .status.bad {
   color: #dc2626;
 }
+
+.sr-only {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

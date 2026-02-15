@@ -1,6 +1,14 @@
-export default function DataTable(columns, rows) {
+export default function DataTable(columns, rows, captionText = "") {
   const table = document.createElement("table");
   table.classList.add("data-table");
+  table.setAttribute("role", "table");
+
+  // Caption (good for accessibility)
+  if (captionText) {
+    const caption = document.createElement("caption");
+    caption.textContent = captionText;
+    table.appendChild(caption);
+  }
 
   const thead = document.createElement("thead");
   const headRow = document.createElement("tr");
@@ -8,6 +16,7 @@ export default function DataTable(columns, rows) {
   columns.forEach(col => {
     const th = document.createElement("th");
     th.textContent = col.label;
+    th.scope = "col"; // Important for screen readers
     headRow.appendChild(th);
   });
 
@@ -18,8 +27,11 @@ export default function DataTable(columns, rows) {
   if (!rows.length) {
     const tr = document.createElement("tr");
     const td = document.createElement("td");
+
     td.colSpan = columns.length;
     td.textContent = "No data available";
+    td.setAttribute("role", "cell");
+
     tr.appendChild(td);
     tbody.appendChild(tr);
   } else {

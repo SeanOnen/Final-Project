@@ -11,19 +11,33 @@ const app = document.querySelector("#app");
 const dataService = new DataService();
 const { raw } = await dataService.getDashboardData();
 
-// extract distributors
+// extract distributors and countries
 const distributors = [...new Set(raw.map(d => d.distributor))];
+const countries = [...new Set(raw.map(d => d.country))];
 
-// render filter
+// render filters
 app.appendChild(
-  Filters((selectedDistributor) => {
-    const filtered =
-      selectedDistributor === "all"
-        ? raw
-        : raw.filter(d => d.distributor === selectedDistributor);
+  Filters((selected) => {
+    let filtered = raw;
+
+    if (selected.distributor !== "all") {
+      filtered = filtered.filter(
+        d => d.distributor === selected.distributor
+      );
+    }
+
+    if (selected.country !== "all") {
+      filtered = filtered.filter(
+        d => d.country === selected.country
+      );
+    }
 
     renderTable(filtered);
-  }, distributors)
+  },
+  [
+    { key: "distributor", label: "Distributors", options: distributors },
+    { key: "country", label: "Countries", options: countries }
+  ])
 );
 
 function renderTable(data) {

@@ -15,6 +15,7 @@ const aggregated = dashboardData.aggregated;
    EXECUTIVE TOTALS (HTML TILES)
 ============================= */
 const totalSales = aggregated.reduce((s, b) => s + b.sales, 0);
+const totalSalesUSD = aggregated.reduce((s, b) => s + b.salesUSD, 0);
 const totalStock = aggregated.reduce((s, b) => s + b.stock, 0);
 const totalEmpties = aggregated.reduce((s, b) => s + b.empties, 0);
 
@@ -58,6 +59,9 @@ emptiesStatus.className =
 const salesTrend =
   totalSales >= salesTarget ? "up" : "down";
 
+const salesUSDTrend =
+  totalSalesUSD >= salesTarget ? "up" : "down";
+
 const stockTrend =
   totalStock >= stockTarget ? "up" : "down";
 
@@ -71,6 +75,7 @@ const kpiContainer = document.getElementById("kpi-cards");
 
 kpiContainer.append(
   KPICard("Total Sales", totalSales, salesTrend),
+  KPICard("Total Sales (USD)", totalSalesUSD, salesUSDTrend),
   KPICard("Total Stock", totalStock, stockTrend),
   KPICard("Empties Outstanding", totalEmpties, emptiesTrend)
 );
