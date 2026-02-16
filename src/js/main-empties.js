@@ -9,11 +9,15 @@ const app = document.querySelector("#app");
 const dataService = new DataService();
 const { raw } = await dataService.getDashboardData();
 
+// Create dedicated container
+const tableContainer = document.createElement("div");
+tableContainer.id = "table-container";
+
 // extract unique brands and countries from raw
 const brands = [...new Set(raw.map(d => d.brand))];
 const countries = [...new Set(raw.map(d => d.country))];
 
-// render filters
+// Append filters FIRST
 app.appendChild(
   Filters((selected) => {
 
@@ -32,7 +36,8 @@ app.appendChild(
     }
 
     // re-aggregate AFTER filtering
-    const aggregatedFiltered = dataService.aggregateByBrand(filtered);
+    const aggregatedFiltered =
+      dataService.aggregateByBrand(filtered);
 
     renderTable(aggregatedFiltered);
 
@@ -43,8 +48,13 @@ app.appendChild(
   ])
 );
 
+// Append container AFTER filters
+app.appendChild(tableContainer);
+
+// Render always targets container
 function renderTable(data) {
-  document.querySelector("table")?.remove();
+
+  tableContainer.innerHTML = "";
 
   const table = DataTable(
     [
@@ -54,8 +64,5 @@ function renderTable(data) {
     data
   );
 
-  app.appendChild(table);
+  tableContainer.appendChild(table);
 }
-
-// initial render (aggregate full dataset)
-renderTable(dataService.aggregateByBrand(raw));

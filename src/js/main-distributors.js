@@ -11,11 +11,15 @@ const app = document.querySelector("#app");
 const dataService = new DataService();
 const { raw } = await dataService.getDashboardData();
 
+// Create dedicated container
+const tableContainer = document.createElement("div");
+tableContainer.id = "table-container";
+
 // extract distributors and countries
 const distributors = [...new Set(raw.map(d => d.distributor))];
 const countries = [...new Set(raw.map(d => d.country))];
 
-// render filters
+// Append filters FIRST
 app.appendChild(
   Filters((selected) => {
     let filtered = raw;
@@ -40,12 +44,11 @@ app.appendChild(
   ])
 );
 
+// Append container AFTER filters
+app.appendChild(tableContainer);
+
+// Render always targets container
 function renderTable(data) {
-  const existing = document.querySelector("table");
-  if (existing) existing.remove();
-
-  app.appendChild(DistributorTable(data));
+  tableContainer.innerHTML = "";
+  tableContainer.appendChild(DistributorTable(data));
 }
-
-// initial render
-renderTable(raw);
